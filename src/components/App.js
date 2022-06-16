@@ -1,46 +1,14 @@
-import logo from "./images/logo.svg";
+import Footer from "./Footer";
+import Header from "./Header";
+import Main from "./Main";
 
 function App() {
   return (
     <div className="page">
       <div className="wrapper">
-        <header className="header">
-          <img src={logo} alt="Лого" className="header__logo" />
-        </header>
-        <main className="content">
-          <section className="profile">
-            <button
-              className="profile__avatar-edit"
-              type="button"
-              title="Обновить аватар"
-            >
-              <img src=" " alt="Аватар" className="profile__avatar" />
-            </button>
-
-            <div className="profile__info">
-              <h1 className="profile__name"></h1>
-              <button
-                className="profile__btn-edit"
-                type="button"
-                title="Редактировать профиль"
-                aria-label="Редактировать профиль"
-              ></button>
-              <p className="profile__about"></p>
-            </div>
-            <button
-              className="profile__btn-add"
-              type="button"
-              title="Добавить фото"
-              aria-label="Добавить фото"
-            ></button>
-          </section>
-          <section className="elements">
-            <ul className="elements__list"></ul>
-          </section>
-        </main>
-        <footer className="footer">
-          <p className="footer__copyright">&copy; 2022 Mesto Russia</p>
-        </footer>
+        <Header />
+        <Main />
+        <Footer />
       </div>
       <section className="popup popup_edit">
         <div className="popup__container">
@@ -214,7 +182,7 @@ function App() {
           <div className="element__figure">
             <img className="element__image" src=" " alt="" />
             <div className="element__info">
-              <h2 className="element__caption"></h2>
+              <h2 className="element__caption"> </h2>
               <div className="element__like-block">
                 <button
                   className="element__btn-like"
