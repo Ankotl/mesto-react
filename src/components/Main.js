@@ -1,6 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import api from "../utils/api";
+import Card from "./Card";
 
-const Main = () => {
+const Main = ({ onEditProfile, onAddPlace, onEditAvatar }) => {
+  const [userName, setUserName] = useState("");
+  const [userDescription, setUserDescription] = useState("");
+  const [userAvatar, setUserAvatar] = useState("");
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    api
+      .getInitialData()
+      .then((res) => {
+        const [userData, cardData] = res;
+        setUserName(userData.name);
+        setUserDescription(userData.about);
+        setUserAvatar(userData.avatar);
+        setCards(cardData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <main className="content">
       <section className="profile">
@@ -8,21 +30,24 @@ const Main = () => {
           className="profile__avatar-edit"
           type="button"
           title="Обновить аватар"
+          onClick={onEditAvatar}
         >
-          <img src=" " alt="Аватар" className="profile__avatar" />
+          <img className="profile__avatar" src={userAvatar} alt={userName} />
         </button>
 
         <div className="profile__info">
-          <h1 className="profile__name"> </h1>
+          <h1 className="profile__name">{userName}</h1>
           <button
+            onClick={onEditProfile}
             className="profile__btn-edit"
             type="button"
             title="Редактировать профиль"
             aria-label="Редактировать профиль"
           ></button>
-          <p className="profile__about"></p>
+          <p className="profile__about">{userDescription}</p>
         </div>
         <button
+          onClick={onAddPlace}
           className="profile__btn-add"
           type="button"
           title="Добавить фото"
@@ -30,7 +55,11 @@ const Main = () => {
         ></button>
       </section>
       <section className="elements">
-        <ul className="elements__list"></ul>
+        <ul className="elements__list">
+          {cards.map((card) => (
+            <Card key={card._id} {...card} />
+          ))}
+        </ul>
       </section>
     </main>
   );
