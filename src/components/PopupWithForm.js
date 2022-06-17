@@ -1,18 +1,17 @@
 import React from "react";
 
-const PopupWithForm = (props) => {
+const PopupWithForm = ({ name, title, isOpen, onClose, children }) => {
   return (
     <section
-      className={`popup popup_type_${props.name} ${
-        props.isOpen ? "popup_opened" : ""
-      }`}
+      className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}
     >
       <div className="popup__container">
         <form className="popup__form" name="editFormProfile" noValidate>
-          {props.children}
+          <h2 className="popup__title">{title}</h2>
+          {children}
         </form>
         <button
-          onClick={props.onClose}
+          onClick={onClose}
           className="popup__btn-close"
           type="button"
           title="Закрыть"

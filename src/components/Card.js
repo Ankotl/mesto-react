@@ -1,10 +1,19 @@
 import React from "react";
 
-const Card = ({ name, link, likes }) => {
+const Card = ({ name, link, likes, onCardClick }) => {
+  function handleClick() {
+    onCardClick({ link, name });
+  }
+
   return (
     <li className="element">
       <div className="element__figure">
-        <img className="element__image" src={link} alt={name} />
+        <img
+          className="element__image"
+          src={link}
+          alt={name}
+          onClick={handleClick}
+        />
         <div className="element__info">
           <h2 className="element__caption">{name}</h2>
           <div className="element__like-block">

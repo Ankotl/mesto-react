@@ -9,6 +9,11 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
+
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+  };
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
@@ -24,6 +29,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setSelectedCard({});
   };
 
   return (
@@ -34,6 +40,7 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
+          onCardClick={handleCardClick}
         />
         <Footer />
       </div>
@@ -41,8 +48,8 @@ function App() {
         name="edit"
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
+        title="Редактировать профиль"
       >
-        <h2 className="popup__title">Редактировать профиль</h2>
         <fieldset className="popup__fieldset">
           <input
             className="popup__input"
@@ -81,8 +88,8 @@ function App() {
         name="add"
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
+        title="Новое место"
       >
-        <h2 className="popup__title">Новое место</h2>
         <fieldset className="popup__fieldset">
           <input
             className="popup__input"
@@ -114,9 +121,7 @@ function App() {
           </button>
         </fieldset>
       </PopupWithForm>
-      <PopupWithForm name="confirm">
-        <h2 className="popup__title">Вы уверены?</h2>
-
+      <PopupWithForm name="confirm" title="Вы уверены?">
         <button
           className="popup__btn-save popup__btn-save_confirm"
           type="submit"
@@ -130,8 +135,8 @@ function App() {
         name="update-avatar"
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
+        title="Обновить аватар"
       >
-        <h2 className="popup__title">Обновить аватар</h2>
         <fieldset className="popup__fieldset">
           <input
             className="popup__input"
@@ -153,7 +158,7 @@ function App() {
           </button>
         </fieldset>
       </PopupWithForm>
-      <ImagePopup />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </div>
   );
 }

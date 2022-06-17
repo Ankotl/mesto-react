@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import api from "../utils/api";
 import Card from "./Card";
 
-const Main = ({ onEditProfile, onAddPlace, onEditAvatar }) => {
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
+const Main = ({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) => {
+  const [userName, setUserName] = useState("Name");
+  const [userDescription, setUserDescription] = useState("About");
   const [userAvatar, setUserAvatar] = useState("");
   const [cards, setCards] = useState([]);
 
@@ -31,9 +31,8 @@ const Main = ({ onEditProfile, onAddPlace, onEditAvatar }) => {
           type="button"
           title="Обновить аватар"
           onClick={onEditAvatar}
-        >
-          <img className="profile__avatar" src={userAvatar} alt={userName} />
-        </button>
+        ></button>
+        <img className="profile__avatar" src={userAvatar} alt={userName} />
 
         <div className="profile__info">
           <h1 className="profile__name">{userName}</h1>
@@ -57,7 +56,7 @@ const Main = ({ onEditProfile, onAddPlace, onEditAvatar }) => {
       <section className="elements">
         <ul className="elements__list">
           {cards.map((card) => (
-            <Card key={card._id} {...card} />
+            <Card key={card._id} {...card} onCardClick={onCardClick} />
           ))}
         </ul>
       </section>
