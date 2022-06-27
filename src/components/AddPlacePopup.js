@@ -15,11 +15,17 @@ const AddPlacePopup = ({ isOpen, onClose, onAddPlace, isLoading }) => {
     setLink("");
   }
 
+  function handleClose() {
+    onClose();
+    setName("");
+    setLink("");
+  }
+
   return (
     <PopupWithForm
       name="add"
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       onSubmit={handleSubmit}
       title="Новое место"
     >
