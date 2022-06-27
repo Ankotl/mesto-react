@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CurrentUserContext } from "../context/CurrentUserContext";
 
-const Card = ({ name, link, likes, onCardClick }) => {
+const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
+  const currentUser = useContext(CurrentUserContext);
+
+  const isOwn = card.owner._id === currentUser._id;
+
+  const isLiked = card.likes.some((i) => i._id === currentUser._id);
+  const cardLikeButtonClassName = `element__btn-like ${
+    isLiked ? "element__btn-like_active" : ""
+  }`;
+
   function handleClick() {
-    onCardClick({ link, name });
+    onCardClick(card);
+  }
+
+  function handleLikeClick() {
+    onCardLike(card);
+  }
+
+  function handleDeleteClick() {
+    onCardDelete(card);
   }
 
   return (
@@ -10,29 +28,33 @@ const Card = ({ name, link, likes, onCardClick }) => {
       <div className="element__figure">
         <img
           className="element__image"
-          src={link}
-          alt={name}
+          src={card.link}
+          alt={card.name}
           onClick={handleClick}
         />
         <div className="element__info">
-          <h2 className="element__caption">{name}</h2>
+          <h2 className="element__caption">{card.name}</h2>
           <div className="element__like-block">
             <button
-              className="element__btn-like"
+              className={cardLikeButtonClassName}
               type="button"
               title="Нравится"
               aria-label="Нравиться"
+              onClick={handleLikeClick}
             ></button>
-            <p className="element__like-count">{likes.length}</p>
+            <p className="element__like-count">{card.likes.length}</p>
           </div>
         </div>
       </div>
-      <button
-        className="element__btn-delete"
-        type="button"
-        title="Удалить"
-        aria-label="Удалить"
-      ></button>
+      {isOwn && (
+        <button
+          className="element__btn-delete"
+          type="button"
+          title="Удалить"
+          aria-label="Удалить"
+          onClick={handleDeleteClick}
+        ></button>
+      )}
     </li>
   );
 };

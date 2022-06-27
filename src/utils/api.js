@@ -75,6 +75,14 @@ class Api {
     }).then(this._checkResponse);
   }
 
+  changeLikeCardStatus(cardId, status) {
+    if (status) {
+      return this.addLikeCard(cardId);
+    } else {
+      return this.deleteLikeCard(cardId);
+    }
+  }
+
   updateAvatar(body) {
     const requestUrl = this._baseUrl + "/users/me/avatar";
     return fetch(requestUrl, {
