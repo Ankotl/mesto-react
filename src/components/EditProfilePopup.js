@@ -10,7 +10,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, isLoading }) => {
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -20,6 +20,14 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, isLoading }) => {
       about: description,
     });
   }
+
+  function handleNameChange(e) {
+    setName(e.target.value);
+  }
+  function handleDescriptionChange(e) {
+    setDescription(e.target.value);
+  }
+
   return (
     <PopupWithForm
       name="edit"
@@ -38,8 +46,8 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, isLoading }) => {
           minLength="2"
           maxLength="40"
           id="input-name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={name || ""}
+          onChange={handleNameChange}
         />
         <span className="popup__error input-name-error"></span>
         <input
@@ -51,8 +59,8 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, isLoading }) => {
           minLength="2"
           maxLength="200"
           id="input-about"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={description || ""}
+          onChange={handleDescriptionChange}
         />
         <span className="popup__error input-about-error"></span>
         <button

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 const AddPlacePopup = ({ isOpen, onClose, onAddPlace, isLoading }) => {
@@ -11,21 +11,25 @@ const AddPlacePopup = ({ isOpen, onClose, onAddPlace, isLoading }) => {
       name,
       link,
     });
-    setName("");
-    setLink("");
   }
 
-  function handleClose() {
-    onClose();
+  useEffect(() => {
     setName("");
     setLink("");
+  }, [isOpen]);
+
+  function handleNameChange(e) {
+    setName(e.target.value);
+  }
+  function handleLinkChange(e) {
+    setLink(e.target.value);
   }
 
   return (
     <PopupWithForm
       name="add"
       isOpen={isOpen}
-      onClose={handleClose}
+      onClose={onClose}
       onSubmit={handleSubmit}
       title="Новое место"
     >
@@ -40,7 +44,7 @@ const AddPlacePopup = ({ isOpen, onClose, onAddPlace, isLoading }) => {
           maxLength="30"
           id="input-title"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleNameChange}
         />
         <span className="popup__error input-title-error"></span>
         <input
@@ -51,7 +55,7 @@ const AddPlacePopup = ({ isOpen, onClose, onAddPlace, isLoading }) => {
           required
           id="input-link"
           value={link}
-          onChange={(e) => setLink(e.target.value)}
+          onChange={handleLinkChange}
         />
         <span className="popup__error input-link-error"></span>
         <button
