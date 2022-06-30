@@ -8,6 +8,26 @@ const PopupWithForm = ({
   children,
   onSubmit,
 }) => {
+  React.useEffect(() => {
+    const close = (e) => {
+      if (e.key == "Escape") {
+        onClose();
+      }
+
+      if (
+        e.target.classList.contains("popup_opened") ||
+        e.target.classList.contains("popup__btn-close")
+      ) {
+        onClose();
+      }
+    };
+    window.addEventListener("mousedown", close);
+    window.addEventListener("keydown", close);
+    return () => {
+      window.removeEventListener("keydown", close);
+      window.removeEventListener("mousedown", close);
+    };
+  }, []);
   return (
     <section className={`popup popup_type_${name} ${isOpen && "popup_opened"}`}>
       <div className="popup__container">
