@@ -19,6 +19,28 @@ function App() {
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const closeEsc = (e) => {
+    if (e.key === "Escape") {
+      closeAllPopups();
+    }
+  };
+  const closeOverlay = (e) => {
+    if (
+      e.target.classList.contains("popup_opened") ||
+      e.target.classList.contains("popup__btn-close")
+    ) {
+      closeAllPopups();
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("mousedown", closeOverlay);
+    window.addEventListener("keydown", closeEsc);
+    return () => {
+      window.removeEventListener("keydown", closeEsc);
+      window.removeEventListener("mousedown", closeOverlay);
+    };
+  }, [isAddPlacePopupOpen, isEditAvatarPopupOpen, isEditProfilePopupOpen]);
+
   useEffect(() => {
     api
       .getInitialCards()
